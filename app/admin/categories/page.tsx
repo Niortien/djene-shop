@@ -19,7 +19,6 @@ export default function AdminCategoriesPage() {
   const [createError, setCreateError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    setIsLoading(true);
     setError(null);
     try {
       const res = await getCategories();

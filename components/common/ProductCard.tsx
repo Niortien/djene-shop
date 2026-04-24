@@ -24,6 +24,8 @@ function primaryImage(product: ApiProduct): string {
   );
 }
 
+const TWO_WEEKS_MS = 14 * 24 * 60 * 60 * 1000;
+
 export default function ProductCard({ product, className }: ProductCardProps) {
   const sizes = product.sizes ?? [];
   const colors = product.colors ?? [];
@@ -35,7 +37,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
 
   const isNew =
     new Date(product.createdAt) >
-    new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+    new Date(Date.now() - TWO_WEEKS_MS);
   const discount = product.salePrice
     ? Math.round((1 - product.salePrice / product.price) * 100)
     : null;

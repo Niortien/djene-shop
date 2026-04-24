@@ -29,7 +29,6 @@ export default function ShopClient({ initialCategories }: ShopClientProps) {
     initialCategories.find((c) => c.slug === activeCategorySlug) ?? null;
 
   const fetchProducts = useCallback(async () => {
-    setIsLoading(true);
     setError(null);
     try {
       const sortMap: Record<string, { sortBy?: "price" | "createdAt"; sortOrder?: "ASC" | "DESC" }> = {

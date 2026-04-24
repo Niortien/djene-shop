@@ -153,7 +153,6 @@ export default function AccountPage() {
   // Fetch orders
   useEffect(() => {
     if (!token) return;
-    setOrdersLoading(true);
     getMyOrders(token)
       .then(setOrders)
       .catch(() => {})
@@ -279,7 +278,7 @@ export default function AccountPage() {
                 </div>
                 <h2 className="text-xl font-bold text-white">Aucune commande</h2>
                 <p className="text-zinc-500 text-sm max-w-xs">
-                  Vous n'avez pas encore passé de commande. Explorez la boutique pour trouver votre style.
+                  Vous n&apos;avez pas encore passé de commande. Explorez la boutique pour trouver votre style.
                 </p>
                 <Link
                   href="/shop"

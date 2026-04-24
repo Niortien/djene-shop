@@ -269,10 +269,10 @@ export default function ContactPage() {
           >
             {/* Quick contact */}
             <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-6">
-              <h3 className="font-bold text-lg mb-4">Besoin d'une réponse rapide ?</h3>
+              <h3 className="font-bold text-lg mb-4">Besoin d&apos;une réponse rapide ?</h3>
               <p className="text-zinc-400 text-sm mb-5 leading-relaxed">
                 Pour toute urgence, contactez-nous directement sur WhatsApp.
-                On répond en moyenne en moins d'une heure.
+                On répond en moyenne en moins d&apos;une heure.
               </p>
               <a
                 href="https://wa.me/221771000001"
@@ -309,7 +309,7 @@ export default function ContactPage() {
             <div className="bg-blue-600/10 border border-blue-500/20 rounded-2xl p-6">
               <h3 className="font-bold text-lg mb-2">Questions fréquentes</h3>
               <p className="text-zinc-400 text-sm mb-4 leading-relaxed">
-                Livraison, retours, tailles… Consultez notre FAQ avant d'écrire.
+                Livraison, retours, tailles… Consultez notre FAQ avant d&apos;écrire.
               </p>
               <Link
                 href="/faq"

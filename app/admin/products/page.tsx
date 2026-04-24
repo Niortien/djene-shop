@@ -17,7 +17,6 @@ export default function AdminProductsPage() {
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    setIsLoading(true);
     setError(null);
     try {
       const res = await getProducts({ limit: 100, sortBy: "createdAt", sortOrder: "DESC" });

@@ -52,7 +52,7 @@ export default function AdminDashboardPage() {
   return (
     <div>
       <h1 className="text-3xl font-black tracking-tighter text-white mb-1">Dashboard</h1>
-      <p className="text-zinc-500 text-sm mb-8">Vue d'ensemble de la boutique</p>
+      <p className="text-zinc-500 text-sm mb-8">Vue d&apos;ensemble de la boutique</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {cards.map(({ label, value, icon: Icon, href, color }) => (

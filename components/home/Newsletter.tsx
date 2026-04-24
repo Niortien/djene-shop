@@ -120,7 +120,7 @@ export default function Newsletter() {
                     <Loader2 size={16} className="animate-spin" />
                   ) : (
                     <>
-                      S'inscrire
+                      S&apos;inscrire
                       <Send size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </>
                   )}

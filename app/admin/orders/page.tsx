@@ -40,7 +40,6 @@ export default function AdminOrdersPage() {
 
   const load = useCallback(async () => {
     if (!token) return;
-    setIsLoading(true);
     setError(null);
     try {
       const res = await adminGetOrders(token);

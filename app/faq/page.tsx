@@ -223,7 +223,7 @@ export default function FaqPage() {
               {searchResults.length === 0 ? (
                 <div className="text-center py-16 text-zinc-500">
                   <p className="text-lg font-medium text-white mb-2">Aucun résultat</p>
-                  <p className="text-sm">Essayez d'autres mots clés ou <Link href="/contact" className="text-blue-400 hover:underline">contactez-nous</Link>.</p>
+                  <p className="text-sm">Essayez d&apos;autres mots clés ou <Link href="/contact" className="text-blue-400 hover:underline">contactez-nous</Link>.</p>
                 </div>
               ) : (
                 searchResults.map((item, i) => (
@@ -297,7 +297,7 @@ export default function FaqPage() {
               <MessageCircle size={24} className="text-blue-400" />
             </div>
             <h2 className="text-2xl font-black tracking-tight mb-3">
-              Vous n'avez pas trouvé votre réponse ?
+              Vous n&apos;avez pas trouvé votre réponse ?
             </h2>
             <p className="text-zinc-400 text-sm mb-6 max-w-md mx-auto">
               Notre équipe est disponible pour répondre à toutes vos questions,

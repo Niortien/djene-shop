@@ -179,8 +179,8 @@ export default function AboutPage() {
           </div>
 
           <p className="about-sub max-w-2xl mx-auto text-zinc-400 text-lg sm:text-xl leading-relaxed mb-10">
-            Djenebou Shop est née d'une conviction simple : la mode streetwear
-            premium n'a pas de frontières géographiques. Nous l'avons créée
+            Djenebou Shop est née d&apos;une conviction simple : la mode streetwear
+            premium n&apos;a pas de frontières géographiques. Nous l&apos;avons créée
             pour toi, ici, depuis Dakar.
           </p>
 
@@ -240,12 +240,12 @@ export default function AboutPage() {
             className="relative"
           >
             <div className="absolute -top-8 -left-4 text-[120px] font-black text-white/3 leading-none select-none pointer-events-none">
-              "
+              &quot;
             </div>
             <blockquote className="relative z-10 text-3xl sm:text-5xl font-black tracking-tighter leading-tight text-white">
-              Le streetwear n'est pas qu'une tendance.
+              Le streetwear n&apos;est pas qu&apos;une tendance.
               <br />
-              <span className="text-blue-500">C'est une façon de vivre.</span>
+              <span className="text-blue-500">C&apos;est une façon de vivre.</span>
               <br />
               Et nous la vivons depuis Dakar,
               <br />
@@ -396,7 +396,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-zinc-400 mb-10 text-lg leading-relaxed">
               Des milliers de personnes ont déjà choisi Djenebou. Maintenant
-              c'est ton tour de porter quelque chose de plus grand que toi.
+              c&apos;est ton tour de porter quelque chose de plus grand que toi.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <Link

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Ruler, ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
+import { Ruler, ArrowRight } from "lucide-react";
 
 type Category = "joggings" | "tshirts" | "hoodies" | "ensembles";
 
@@ -164,7 +164,7 @@ export default function SizeGuidePage() {
               <span className="text-blue-500">TA TAILLE</span>
             </h1>
             <p className="text-zinc-400 text-lg max-w-xl mx-auto leading-relaxed">
-              Chaque pièce Djenebou est pensée pour s'adapter à ton corps. Utilise ce guide pour
+              Chaque pièce Djenebou est pensée pour s&apos;adapter à ton corps. Utilise ce guide pour
               trouver la coupe parfaite, du XS au 2XL.
             </p>
           </motion.div>
@@ -364,7 +364,7 @@ export default function SizeGuidePage() {
               PRÊT À COMMANDER ?
             </h2>
             <p className="text-zinc-400 mb-8">
-              Maintenant que tu connais ta taille, il ne reste plus qu'à trouver
+              Maintenant que tu connais ta taille, il ne reste plus qu&apos;à trouver
               ta pièce préférée.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">

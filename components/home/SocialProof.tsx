@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 
 const REVIEWS = [
@@ -80,8 +79,6 @@ function StarRating({ count }: { count: number }) {
 }
 
 export default function SocialProof() {
-  const marqueeRef = useRef<HTMLDivElement>(null);
-
   return (
     <section className="py-24 overflow-hidden bg-[#080808]">
       {/* ─── Heading ─────────────────────────────────────────────── */}
@@ -173,7 +170,7 @@ function ReviewCard({ review }: { review: (typeof REVIEWS)[number] }) {
         </div>
       </div>
       <p className="text-zinc-400 text-sm leading-relaxed mb-3 line-clamp-3">
-        "{review.text}"
+        &ldquo;{review.text}&rdquo;
       </p>
       <div
         className="text-xs font-semibold px-2.5 py-1 rounded-full w-fit"
