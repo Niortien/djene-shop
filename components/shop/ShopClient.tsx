@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import ProductCard from "@/components/common/ProductCard";
+import { motion } from "framer-motion";
+import { BentoGrid } from "@/components/shop/BentoGrid";
 import Filters from "@/components/shop/Filters";
 import { getProducts } from "@/lib/api";
 import { ApiProduct, ApiCategory } from "@/types";
@@ -99,28 +99,10 @@ export default function ShopClient({ initialCategories }: ShopClientProps) {
       )}
 
       {!isLoading && !error && (
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategorySlug + activeSort}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"
-          >
-            {products.length > 0 ? (
-              products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))
-            ) : (
-              <div className="col-span-full py-24 text-center">
-                <p className="text-zinc-600 text-sm tracking-widest uppercase">
-                  Aucun article dans cette categorie
-                </p>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+        <BentoGrid
+          products={products}
+          animationKey={activeCategorySlug + activeSort}
+        />
       )}
     </>
   );

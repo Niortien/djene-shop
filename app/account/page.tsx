@@ -183,6 +183,15 @@ export default function AccountPage() {
           <div className="absolute top-0 right-1/3 w-80 h-80 bg-blue-600/8 rounded-full blur-3xl" />
         </div>
         <div className="relative max-w-5xl mx-auto px-6">
+          {/* Back button */}
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-sm mb-8 transition-colors duration-200"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            Retour à l&apos;accueil
+          </Link>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

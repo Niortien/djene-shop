@@ -1,4 +1,5 @@
 import Hero from "@/components/home/Hero";
+import NewArrivals from "@/components/home/NewArrivals";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import CategoryBanner from "@/components/home/CategoryBanner";
 import SocialProof from "@/components/home/SocialProof";
@@ -9,6 +10,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <NewArrivals />
       <FeaturedProducts />
       <CategoryBanner />
       <HowItWorks />

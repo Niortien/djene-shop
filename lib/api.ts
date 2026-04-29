@@ -237,8 +237,47 @@ export async function adminUpdateOrderStatus(
   });
 }
 
+// ─── Client — Cart ───────────────────────────────────────────────────────────
+
+export async function addCartItem(
+  token: string,
+  item: { productId: string; quantity: number; selectedSize?: string; selectedColor?: string }
+): Promise<void> {
+  return authFetch<void>("/orders/cart/items", token, {
+    method: "POST",
+    body: JSON.stringify(item),
+  });
+}
+
+export async function removeCartItem(token: string, itemId: string): Promise<void> {
+  return authFetch<void>(`/orders/cart/items/${itemId}`, token, { method: "DELETE" });
+}
+
 // ─── Client — Orders ──────────────────────────────────────────────────────────
 
 export async function getMyOrders(token: string): Promise<ApiOrder[]> {
   return authFetch<ApiOrder[]>("/orders/my-orders", token);
+}
+
+export interface CreateOrderPayload {
+  shippingAddress?: {
+    fullName: string;
+    phone: string;
+    address: string;
+    city: string;
+    country: string;
+    postalCode?: string;
+  };
+  notes?: string;
+  estimatedDeliveryDate?: string; // YYYY-MM-DD
+}
+
+export async function createOrder(
+  token: string,
+  payload: CreateOrderPayload
+): Promise<ApiOrder> {
+  return authFetch<ApiOrder>("/orders", token, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
 }

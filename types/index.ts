@@ -141,6 +141,8 @@ export interface ApiOrder {
     postalCode?: string;
   } | null;
   notes: string | null;
+  estimatedDeliveryDate: string | null; // YYYY-MM-DD
+  deliveredAt: string | null;
   user: ApiUser | null;
   items: ApiOrderItem[];
   createdAt: string;
