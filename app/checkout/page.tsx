@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -47,6 +47,8 @@ const INITIAL: ShippingForm = {
   notes: "",
   estimatedDeliveryDate: "",
 };
+
+const MIN_DELIVERY_DATE = new Date(Date.now() + 86400000).toISOString().split("T")[0];
 
 // ─── Field component ─────────────────────────────────────────────────────────
 
@@ -107,11 +109,6 @@ export default function CheckoutPage() {
   const [loadingStep, setLoadingStep] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [placed, setPlaced] = useState<ApiOrder | null>(null);
-
-  const minDeliveryDate = useMemo(
-    () => new Date(Date.now() + 86400000).toISOString().split("T")[0],
-    []
-  );
 
   // Empty cart guard
   if (items.length === 0 && !placed) {
@@ -383,7 +380,7 @@ export default function CheckoutPage() {
                 type="date"
                 value={form.estimatedDeliveryDate}
                 onChange={handleChange}
-                min={minDeliveryDate}
+                min={MIN_DELIVERY_DATE}
               />
             </div>
 

@@ -19,6 +19,7 @@ import { formatPrice } from "@/lib/utils";
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const TWO_WEEKS_MS = 14 * 24 * 60 * 60 * 1000;
+const NOW = Date.now();
 
 function primaryImageUrl(product: ApiProduct): string {
   const primary = product.images.find((i) => i.isPrimary);
@@ -95,7 +96,7 @@ function BentoCard({ product, index, isHero, isWide }: BentoCardProps) {
   const colors = product.colors ?? [];
   const defaultSize = sizes[0] ?? "";
   const isNew = useMemo(
-    () => new Date(product.createdAt) > new Date(Date.now() - TWO_WEEKS_MS),
+    () => new Date(product.createdAt) > new Date(NOW - TWO_WEEKS_MS),
     [product.createdAt]
   );
   const discount = product.salePrice

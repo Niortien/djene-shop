@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/auth-store";
 import { adminGetOrders, adminUpdateOrderStatus } from "@/lib/api";
@@ -286,22 +286,24 @@ export default function AdminOrdersPage() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<ApiOrder | null>(null);
   const [filterStatus, setFilterStatus] = useState<OrderStatus | "all">("all");
+  const [refreshKey, setRefreshKey] = useState(0);
 
-  const load = useCallback(async () => {
+  useEffect(() => {
     if (!token) return;
-    setError(null);
-    setIsLoading(true);
-    try {
-      const res = await adminGetOrders(token);
-      setOrders(Array.isArray(res) ? res : []);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setIsLoading(false);
+    async function run() {
+      setError(null);
+      setIsLoading(true);
+      try {
+        const res = await adminGetOrders(token);
+        setOrders(Array.isArray(res) ? res : []);
+      } catch (e) {
+        setError((e as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, [token]);
-
-  useEffect(() => { load(); }, [load]);
+    run();
+  }, [token, refreshKey]);
 
   async function handleStatusChange(order: ApiOrder, status: OrderStatus) {
     if (!token) return;
@@ -334,7 +336,7 @@ export default function AdminOrdersPage() {
               </p>
             </div>
             <button
-              onClick={load}
+              onClick={() => setRefreshKey((k) => k + 1)}
               className="p-2 text-zinc-500 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
               title="Rafraîchir"
             >

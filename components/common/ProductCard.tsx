@@ -28,6 +28,7 @@ function sortedImages(product: ApiProduct) {
 }
 
 const TWO_WEEKS_MS = 14 * 24 * 60 * 60 * 1000;
+const NOW = Date.now();
 
 export default function ProductCard({ product, className, variant = "default" }: ProductCardProps) {
   const sizes = product.sizes ?? [];
@@ -43,7 +44,7 @@ export default function ProductCard({ product, className, variant = "default" }:
   const hasMultiple = images.length > 1;
 
   const isNew = useMemo(
-    () => new Date(product.createdAt) > new Date(Date.now() - TWO_WEEKS_MS),
+    () => new Date(product.createdAt) > new Date(NOW - TWO_WEEKS_MS),
     [product.createdAt]
   );
   const discount = product.salePrice
