@@ -172,24 +172,44 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ─── Mobile FAB + menu (< md) ───────────────────────────────── */}
+      {/* ─── Mobile top bar + menu (< md) ───────────────────────────── */}
       <div className="md:hidden">
-        {/* FAB button */}
-        <button
-          onClick={() => setMenuOpen(true)}
-          aria-label="Ouvrir le menu"
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-blue-600 hover:bg-blue-500 rounded-full shadow-lg shadow-blue-900/40 flex items-center justify-center transition-all duration-200 active:scale-95"
-        >
-          <Menu size={22} className="text-white" />
-          {count > 0 && (
-            <span
-              suppressHydrationWarning
-              className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[10px] font-black text-blue-600 leading-none"
-            >
-              {count > 9 ? "9+" : count}
+        {/* Sticky top bar */}
+        <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-5">
+          {/* Logo */}
+          <Link href="/" onClick={() => setMenuOpen(false)}>
+            <span className="text-white font-black text-xl tracking-tighter leading-none">
+              DJENEBOU<span className="text-blue-500">.</span>
             </span>
-          )}
-        </button>
+          </Link>
+
+          {/* Right actions */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={toggleCart}
+              aria-label={`Panier (${count} articles)`}
+              className="relative p-2.5 text-zinc-400 hover:text-white rounded-xl hover:bg-white/5 transition-colors"
+            >
+              <ShoppingCart size={21} />
+              {count > 0 && (
+                <span
+                  suppressHydrationWarning
+                  className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[9px] font-bold text-white leading-none"
+                >
+                  {count > 9 ? "9+" : count}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => setMenuOpen(true)}
+              aria-label="Ouvrir le menu"
+              className="p-2.5 text-zinc-400 hover:text-white rounded-xl hover:bg-white/5 transition-colors"
+            >
+              <Menu size={22} />
+            </button>
+          </div>
+        </header>
 
         {/* Full-screen menu overlay */}
         <AnimatePresence>

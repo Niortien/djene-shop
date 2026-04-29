@@ -72,6 +72,7 @@ body.has-sidebar {
 @media (max-width: 767px) {
   body.has-sidebar {
     padding-right: 0;
+    padding-top: 64px; /* mobile top bar height */
   }
 }
 ::-webkit-scrollbar-thumb:hover {
