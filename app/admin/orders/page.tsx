@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/auth-store";
 import { adminGetOrders, adminUpdateOrderStatus } from "@/lib/api";
@@ -287,22 +287,21 @@ export default function AdminOrdersPage() {
   const [selected, setSelected] = useState<ApiOrder | null>(null);
   const [filterStatus, setFilterStatus] = useState<OrderStatus | "all">("all");
 
-  useEffect(() => {
+  const load = useCallback(async () => {
     if (!token) return;
-    async function run() {
-      setError(null);
-      setIsLoading(true);
-      try {
-        const res = await adminGetOrders(token);
-        setOrders(Array.isArray(res) ? res : []);
-      } catch (e) {
-        setError((e as Error).message);
-      } finally {
-        setIsLoading(false);
-      }
+    setError(null);
+    setIsLoading(true);
+    try {
+      const res = await adminGetOrders(token);
+      setOrders(Array.isArray(res) ? res : []);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setIsLoading(false);
     }
-    run();
   }, [token]);
+
+  useEffect(() => { load(); }, [load]);
 
   async function handleStatusChange(order: ApiOrder, status: OrderStatus) {
     if (!token) return;

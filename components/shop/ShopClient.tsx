@@ -23,6 +23,7 @@ export default function ShopClient({ initialCategories }: ShopClientProps) {
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
 
   const activeCategory =
     initialCategories.find((c) => c.slug === activeCategorySlug) ?? null;
@@ -53,7 +54,7 @@ export default function ShopClient({ initialCategories }: ShopClientProps) {
       }
     }
     run();
-  }, [activeCategory, activeSort]);
+  }, [activeCategory, activeSort, retryKey]);
 
   const handleCategoryChange = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -82,7 +83,7 @@ export default function ShopClient({ initialCategories }: ShopClientProps) {
           <p className="text-red-400 text-sm mb-2">Impossible de charger les produits</p>
           <p className="text-zinc-600 text-xs">{error}</p>
           <button
-            onClick={fetchProducts}
+            onClick={() => { setIsLoading(true); setRetryKey((k) => k + 1); }}
             className="mt-4 text-xs text-blue-400 hover:text-blue-300 underline"
           >
             Reessayer
