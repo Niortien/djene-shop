@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuthStore } from "@/store/auth-store";
@@ -16,20 +16,21 @@ export default function AdminProductsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    setError(null);
-    try {
-      const res = await getProducts({ limit: 100, sortBy: "createdAt", sortOrder: "DESC" });
-      setProducts(res.data);
-      setTotal(res.meta.total);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    async function run() {
+      setError(null);
+      try {
+        const res = await getProducts({ limit: 100, sortBy: "createdAt", sortOrder: "DESC" });
+        setProducts(res.data);
+        setTotal(res.meta.total);
+      } catch (e) {
+        setError((e as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
     }
+    run();
   }, []);
-
-  useEffect(() => { load(); }, [load]);
 
   async function toggleActive(product: ApiProduct) {
     if (!token) return;

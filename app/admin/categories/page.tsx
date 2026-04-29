@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuthStore } from "@/store/auth-store";
 import { getCategories, adminCreateCategory } from "@/lib/api";
@@ -18,19 +18,20 @@ export default function AdminCategoriesPage() {
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    setError(null);
-    try {
-      const res = await getCategories();
-      setCategories(res);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    async function run() {
+      setError(null);
+      try {
+        const res = await getCategories();
+        setCategories(res);
+      } catch (e) {
+        setError((e as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
     }
+    run();
   }, []);
-
-  useEffect(() => { load(); }, [load]);
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();

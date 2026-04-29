@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -94,8 +94,10 @@ function BentoCard({ product, index, isHero, isWide }: BentoCardProps) {
   const sizes = product.sizes ?? [];
   const colors = product.colors ?? [];
   const defaultSize = sizes[0] ?? "";
-  const isNew =
-    new Date(product.createdAt) > new Date(Date.now() - TWO_WEEKS_MS);
+  const isNew = useMemo(
+    () => new Date(product.createdAt) > new Date(Date.now() - TWO_WEEKS_MS),
+    [product.createdAt]
+  );
   const discount = product.salePrice
     ? Math.round((1 - product.salePrice / product.price) * 100)
     : null;

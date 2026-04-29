@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/auth-store";
 import { adminGetOrders, adminUpdateOrderStatus } from "@/lib/api";
 import { ApiOrder, OrderStatus } from "@/types";
 import { formatPrice } from "@/lib/utils";
 import {
-  Loader2, ChevronDown, X, Package, MapPin, Phone,
+  Loader2, X, Package, MapPin, Phone,
   User, Hash, CalendarDays, StickyNote, RefreshCw,
 } from "lucide-react";
 
@@ -287,21 +287,22 @@ export default function AdminOrdersPage() {
   const [selected, setSelected] = useState<ApiOrder | null>(null);
   const [filterStatus, setFilterStatus] = useState<OrderStatus | "all">("all");
 
-  const load = useCallback(async () => {
+  useEffect(() => {
     if (!token) return;
-    setError(null);
-    setIsLoading(true);
-    try {
-      const res = await adminGetOrders(token);
-      setOrders(Array.isArray(res) ? res : []);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setIsLoading(false);
+    async function run() {
+      setError(null);
+      setIsLoading(true);
+      try {
+        const res = await adminGetOrders(token);
+        setOrders(Array.isArray(res) ? res : []);
+      } catch (e) {
+        setError((e as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
     }
+    run();
   }, [token]);
-
-  useEffect(() => { load(); }, [load]);
 
   async function handleStatusChange(order: ApiOrder, status: OrderStatus) {
     if (!token) return;

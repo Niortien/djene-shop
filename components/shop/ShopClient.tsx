@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import { BentoGrid } from "@/components/shop/BentoGrid";
 import Filters from "@/components/shop/Filters";
 import { getProducts } from "@/lib/api";
@@ -28,34 +27,33 @@ export default function ShopClient({ initialCategories }: ShopClientProps) {
   const activeCategory =
     initialCategories.find((c) => c.slug === activeCategorySlug) ?? null;
 
-  const fetchProducts = useCallback(async () => {
-    setError(null);
-    try {
-      const sortMap: Record<string, { sortBy?: "price" | "createdAt"; sortOrder?: "ASC" | "DESC" }> = {
-        "price-asc": { sortBy: "price", sortOrder: "ASC" },
-        "price-desc": { sortBy: "price", sortOrder: "DESC" },
-        "new": { sortBy: "createdAt", sortOrder: "DESC" },
-        "default": {},
-      };
-
-      const res = await getProducts({
-        ...(activeCategory ? { categoryId: activeCategory.id } : {}),
-        ...sortMap[activeSort],
-        limit: 50,
-      });
-
-      setProducts(res.data);
-      setTotal(res.meta.total);
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [activeCategory, activeSort]);
-
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    async function run() {
+      setError(null);
+      try {
+        const sortMap: Record<string, { sortBy?: "price" | "createdAt"; sortOrder?: "ASC" | "DESC" }> = {
+          "price-asc": { sortBy: "price", sortOrder: "ASC" },
+          "price-desc": { sortBy: "price", sortOrder: "DESC" },
+          "new": { sortBy: "createdAt", sortOrder: "DESC" },
+          "default": {},
+        };
+
+        const res = await getProducts({
+          ...(activeCategory ? { categoryId: activeCategory.id } : {}),
+          ...sortMap[activeSort],
+          limit: 50,
+        });
+
+        setProducts(res.data);
+        setTotal(res.meta.total);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    run();
+  }, [activeCategory, activeSort]);
 
   const handleCategoryChange = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString());

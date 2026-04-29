@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, Heart } from "lucide-react";
@@ -42,7 +42,10 @@ export default function ProductCard({ product, className, variant = "default" }:
   const images = sortedImages(product);
   const hasMultiple = images.length > 1;
 
-  const isNew = new Date(product.createdAt) > new Date(Date.now() - TWO_WEEKS_MS);
+  const isNew = useMemo(
+    () => new Date(product.createdAt) > new Date(Date.now() - TWO_WEEKS_MS),
+    [product.createdAt]
+  );
   const discount = product.salePrice
     ? Math.round((1 - product.salePrice / product.price) * 100)
     : null;
