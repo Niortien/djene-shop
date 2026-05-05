@@ -46,14 +46,15 @@ export default function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 260 }}
-            className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-md bg-zinc-950 border-l border-white/10 flex flex-col"
+            className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-md border-l flex flex-col"
+            style={{ background: "var(--surface)", borderColor: "var(--border)" }}
             aria-label="Panier"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0">
+            <div className="flex items-center justify-between px-6 py-5 border-b shrink-0" style={{ borderColor: "var(--border)" }}>
               <div className="flex items-center gap-3">
                 <ShoppingBag size={20} className="text-blue-500" />
-                <h2 className="text-white font-bold tracking-wide">
+                <h2 className="font-bold tracking-wide" style={{ color: "var(--foreground)" }}>
                   Mon Panier
                 </h2>
                 {count > 0 && (
@@ -64,7 +65,8 @@ export default function CartDrawer() {
               </div>
               <button
                 onClick={closeCart}
-                className="p-2 text-zinc-500 hover:text-white transition-colors rounded-full hover:bg-white/10"
+                className="p-2 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10"
+                style={{ color: "var(--muted)" }}
                 aria-label="Fermer le panier"
               >
                 <X size={20} />
@@ -75,11 +77,11 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto py-4 px-6 space-y-4">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center py-20">
-                  <ShoppingBag size={52} className="text-zinc-800 mb-5" />
-                  <p className="text-zinc-300 font-semibold mb-2">
+                  <ShoppingBag size={52} className="mb-5" style={{ color: "var(--border)" }} />
+                  <p className="font-semibold mb-2" style={{ color: "var(--foreground)" }}>
                     Votre panier est vide
                   </p>
-                  <p className="text-zinc-600 text-sm mb-8 max-w-xs">
+                  <p className="text-sm mb-8 max-w-xs" style={{ color: "var(--muted)" }}>
                     Découvrez nos collections streetwear et ajoutez vos pièces
                     préférées.
                   </p>
@@ -95,10 +97,10 @@ export default function CartDrawer() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="flex gap-4 py-4 border-b border-white/5 last:border-0"
+                    className="flex gap-4 py-4 border-b last:border-0" style={{ borderColor: "var(--border)" }}
                   >
                     {/* Thumbnail */}
-                    <div className="relative w-20 h-24 rounded-md overflow-hidden bg-zinc-800 shrink-0">
+                    <div className="relative w-20 h-24 rounded-md overflow-hidden shrink-0" style={{ background: "var(--surface-alt)" }}>
                       <Image
                         src={item.product.images.find((i) => i.isPrimary)?.url ?? item.product.images[0]?.url ?? ""}
                         alt={item.product.name}
@@ -110,10 +112,10 @@ export default function CartDrawer() {
 
                     {/* Details */}
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-white text-sm font-semibold leading-snug line-clamp-2">
+                      <h4 className="text-sm font-semibold leading-snug line-clamp-2" style={{ color: "var(--foreground)" }}>
                         {item.product.name}
                       </h4>
-                      <p className="text-zinc-500 text-xs mt-1">
+                      <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
                         Taille: {item.size}{item.color ? ` · ${item.color}` : ""}
                       </p>
                       <p className="text-blue-400 font-bold text-sm mt-1.5">
@@ -131,12 +133,13 @@ export default function CartDrawer() {
                               item.quantity - 1
                             )
                           }
-                          className="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
+                          className="w-7 h-7 rounded-full flex items-center justify-center transition-colors hover:text-blue-500"
+                          style={{ background: "var(--surface-alt)", color: "var(--muted)" }}
                           aria-label="Diminuer la quantité"
                         >
                           <Minus size={12} />
                         </button>
-                        <span className="text-white text-sm font-semibold w-5 text-center">
+                        <span className="text-sm font-semibold w-5 text-center" style={{ color: "var(--foreground)" }}>
                           {item.quantity}
                         </span>
                         <button
@@ -148,7 +151,8 @@ export default function CartDrawer() {
                               item.quantity + 1
                             )
                           }
-                          className="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
+                          className="w-7 h-7 rounded-full flex items-center justify-center transition-colors hover:text-blue-500"
+                          style={{ background: "var(--surface-alt)", color: "var(--muted)" }}
                           aria-label="Augmenter la quantité"
                         >
                           <Plus size={12} />
@@ -176,14 +180,14 @@ export default function CartDrawer() {
 
             {/* Footer / Checkout */}
             {items.length > 0 && (
-              <div className="px-6 py-5 border-t border-white/10 space-y-4 shrink-0">
+              <div className="px-6 py-5 border-t space-y-4 shrink-0" style={{ borderColor: "var(--border)" }}>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-zinc-500">Sous-total</span>
-                  <span className="text-white font-black text-lg">
+                  <span style={{ color: "var(--muted)" }}>Sous-total</span>
+                  <span className="font-black text-lg" style={{ color: "var(--foreground)" }}>
                     {formatPrice(total)}
                   </span>
                 </div>
-                <div className="flex justify-between text-xs text-zinc-600">
+                <div className="flex justify-between text-xs" style={{ color: "var(--muted)" }}>
                   <span>Livraison</span>
                   <span className="text-emerald-400 font-medium">
                     Calculée à la commande
@@ -194,7 +198,7 @@ export default function CartDrawer() {
                     Commander — {formatPrice(total)}
                   </Link>
                 </Button>
-                <p className="text-center text-[11px] text-zinc-700">
+                <p className="text-center text-[11px]" style={{ color: "var(--muted)" }}>
                   Paiement sécurisé · Wave · MTN MoMo · CinetPay
                 </p>
               </div>

@@ -6,12 +6,13 @@ import { usePathname } from "next/navigation";
 import {
   ShoppingCart, LayoutGrid, Menu, X,
   Home, ShoppingBag, Info, Ruler, ArrowRight,
-  Phone, MessageCircle, User,
+  Phone, MessageCircle, User, Sun, Moon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useCartStore, cartItemCount } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
+import { useTheme } from "next-themes";
 import gsap from "gsap";
 
 const NAV_LINKS = [
@@ -30,8 +31,10 @@ export default function Navbar() {
   const pathname = usePathname();
   const { items, toggleCart } = useCartStore();
   const { user } = useAuthStore();
+  const { theme, setTheme } = useTheme();
   const count = cartItemCount(items);
   const isAdmin = user?.role === "admin" || user?.role === "seller";
+  const isDark = theme === "dark";
 
   // GSAP entrance — slides in from right
   useEffect(() => {
@@ -58,7 +61,8 @@ export default function Navbar() {
       {/* ─── Desktop sidebar (md+) ─────────────────────────────────── */}
       <nav
         ref={navRef}
-        className="hidden md:flex fixed right-0 top-0 h-screen w-20 z-50 flex-col items-center py-6 bg-[#0a0a0a]/90 backdrop-blur-xl border-l border-white/5"
+        className="hidden md:flex fixed right-0 top-0 h-screen w-20 z-50 flex-col items-center py-6 backdrop-blur-xl border-l"
+        style={{ background: "var(--nav-bg)", borderColor: "var(--nav-border)" }}
       >
         {/* Logo */}
         <Link
@@ -66,11 +70,11 @@ export default function Navbar() {
           className="flex flex-col items-center gap-0.5 mb-8 group"
           title="Djenebou Shop"
         >
-          <span className="text-white font-black text-xl tracking-tighter leading-none group-hover:text-blue-400 transition-colors duration-200">
+          <span className="text-foreground font-black text-xl tracking-tighter leading-none group-hover:text-blue-400 transition-colors duration-200">
             D
           </span>
           <span className="text-blue-500 font-black text-xl leading-none">.</span>
-          <span className="text-[8px] text-zinc-600 tracking-[0.25em] uppercase mt-0.5">
+          <span className="text-[8px] text-zinc-500 tracking-[0.25em] uppercase mt-0.5">
             Shop
           </span>
         </Link>
@@ -91,8 +95,8 @@ export default function Navbar() {
                   className={cn(
                     "relative flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl w-16 transition-all duration-200 group",
                     active
-                      ? "text-white bg-white/8"
-                      : "text-zinc-500 hover:text-white hover:bg-white/5"
+                      ? "text-foreground bg-black/8 dark:bg-white/8"
+                      : "text-zinc-500 hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
                   )}
                 >
                   {active && (
@@ -112,10 +116,12 @@ export default function Navbar() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 8 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-22 top-1/2 -translate-y-1/2 bg-zinc-900 border border-white/10 text-white text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap pointer-events-none"
+                      className="absolute right-22 top-1/2 -translate-y-1/2 border text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap pointer-events-none"
+                      style={{ background: "var(--surface)", borderColor: "var(--nav-border)", color: "var(--foreground)" }}
                     >
                       {label}
-                      <span className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-zinc-900 border-r border-t border-white/10 rotate-45" />
+                      <span className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 border-r border-t rotate-45"
+                      style={{ background: "var(--surface)", borderColor: "var(--nav-border)" }} />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -126,13 +132,25 @@ export default function Navbar() {
 
         {/* Bottom actions */}
         <div className="flex flex-col items-center gap-1 mt-4">
-          <div className="w-8 h-px bg-white/8 mb-3" />
+          <div className="w-8 h-px mb-3" style={{ background: "var(--border)" }} />
+
+          {/* Theme toggle — desktop */}
+          <button
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            aria-label={isDark ? "Passer en mode clair" : "Passer en mode sombre"}
+            className="flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl w-16 text-zinc-500 hover:text-blue-400 dark:hover:text-blue-400 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200"
+          >
+            {isDark ? <Sun size={19} strokeWidth={1.5} /> : <Moon size={19} strokeWidth={1.5} />}
+            <span className="text-[9px] tracking-[0.15em] uppercase leading-none">
+              {isDark ? "Clair" : "Sombre"}
+            </span>
+          </button>
 
           {isAdmin && (
             <Link
               href="/admin"
               title="Administration"
-              className="flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl w-16 text-zinc-500 hover:text-blue-400 hover:bg-white/5 transition-all duration-200 group"
+              className="flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl w-16 text-zinc-500 hover:text-blue-400 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 group"
             >
               <LayoutGrid size={19} strokeWidth={1.5} />
               <span className="text-[9px] tracking-[0.15em] uppercase leading-none">Admin</span>
@@ -145,8 +163,8 @@ export default function Navbar() {
             className={cn(
               "flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl w-16 transition-all duration-200",
               pathname === "/account"
-                ? "text-white bg-white/8"
-                : "text-zinc-500 hover:text-white hover:bg-white/5"
+                ? "text-foreground bg-black/8 dark:bg-white/8"
+                : "text-zinc-500 hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
             )}
           >
             <User size={19} strokeWidth={1.5} />
@@ -156,7 +174,7 @@ export default function Navbar() {
           <button
             onClick={toggleCart}
             aria-label={`Panier (${count} articles)`}
-            className="relative flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl w-16 text-zinc-500 hover:text-white hover:bg-white/5 transition-all duration-200"
+            className="relative flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl w-16 text-zinc-500 hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200"
           >
             <ShoppingCart size={19} strokeWidth={1.5} />
             <span className="text-[9px] tracking-[0.15em] uppercase leading-none">Panier</span>
@@ -175,10 +193,11 @@ export default function Navbar() {
       {/* ─── Mobile top bar + menu (< md) ───────────────────────────── */}
       <div className="md:hidden">
         {/* Sticky top bar */}
-        <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-5">
+        <header className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-xl flex items-center justify-between px-5"
+          style={{ background: "var(--nav-bg)", borderBottom: "1px solid var(--nav-border)" }}>
           {/* Logo */}
           <Link href="/" onClick={() => setMenuOpen(false)}>
-            <span className="text-white font-black text-xl tracking-tighter leading-none">
+            <span className="text-foreground font-black text-xl tracking-tighter leading-none">
               DJENEBOU<span className="text-blue-500">.</span>
             </span>
           </Link>
@@ -228,12 +247,13 @@ export default function Navbar() {
                 exit={{ x: "100%" }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 onClick={(e) => e.stopPropagation()}
-                className="absolute right-0 top-0 h-full w-70 bg-[#0a0a0a] border-l border-white/5 flex flex-col px-6 py-8"
+                className="absolute right-0 top-0 h-full w-70 flex flex-col px-6 py-8"
+                style={{ background: "var(--surface)", borderLeft: "1px solid var(--nav-border)" }}
               >
                 {/* Header */}
                 <div className="flex items-center justify-between mb-10">
                   <Link href="/" onClick={() => setMenuOpen(false)}>
-                    <span className="text-2xl font-black tracking-tighter text-white">
+                    <span className="text-2xl font-black tracking-tighter text-foreground">
                       DJENEBOU<span className="text-blue-500">.</span>
                     </span>
                   </Link>
@@ -263,8 +283,8 @@ export default function Navbar() {
                             className={cn(
                               "flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200",
                               active
-                                ? "text-white bg-white/8"
-                                : "text-zinc-400 hover:text-white hover:bg-white/5"
+                                ? "text-foreground bg-black/8 dark:bg-white/8"
+                                : "text-zinc-400 hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
                             )}
                           >
                             <Icon size={20} strokeWidth={active ? 2 : 1.5} />
@@ -301,11 +321,12 @@ export default function Navbar() {
                 >
                   <button
                     onClick={() => { setMenuOpen(false); toggleCart(); }}
-                    className="w-full flex items-center justify-between gap-3 bg-zinc-900 hover:bg-zinc-800 border border-white/5 px-4 py-4 rounded-xl transition-colors duration-200 mt-6"
+                    className="w-full flex items-center justify-between gap-3 px-4 py-4 rounded-xl transition-colors duration-200 mt-6 border"
+                    style={{ background: "var(--surface-alt)", borderColor: "var(--border)" }}
                   >
                     <div className="flex items-center gap-3">
-                      <ShoppingCart size={19} className="text-zinc-400" />
-                      <span className="text-sm font-medium text-zinc-300">Mon panier</span>
+                      <ShoppingCart size={19} style={{ color: "var(--muted)" }} />
+                      <span className="text-sm font-medium" style={{ color: "var(--foreground)" }}>Mon panier</span>
                     </div>
                     {count > 0 && (
                       <span
@@ -315,6 +336,18 @@ export default function Navbar() {
                         {count}
                       </span>
                     )}
+                  </button>
+
+                  {/* Theme toggle — mobile */}
+                  <button
+                    onClick={() => setTheme(isDark ? "light" : "dark")}
+                    className="mt-3 w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-colors duration-200"
+                    style={{ background: "var(--surface-alt)", borderColor: "var(--border)", color: "var(--muted)" }}
+                  >
+                    {isDark ? <Sun size={19} strokeWidth={1.5} /> : <Moon size={19} strokeWidth={1.5} />}
+                    <span className="text-sm font-medium" style={{ color: "var(--foreground)" }}>
+                      {isDark ? "Passer en mode clair" : "Passer en mode sombre"}
+                    </span>
                   </button>
                 </motion.div>
               </motion.div>

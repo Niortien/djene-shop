@@ -3,7 +3,7 @@ import { Globe, MessageCircle, AtSign } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-950 border-t border-white/10 mt-auto">
+    <footer className="border-t mt-auto" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
@@ -14,7 +14,7 @@ export default function Footer() {
               </span>
               <span className="text-2xl font-black text-blue-500">.</span>
             </Link>
-            <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
+              <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--muted)" }}>
               La marque streetwear premium pour les esprits libres. Style,
               confort et authenticité — Made in Dakar.
             </p>
@@ -23,7 +23,8 @@ export default function Footer() {
                 <a
                   key={i}
                   href="#"
-                  className="p-2.5 rounded-full bg-zinc-900 text-zinc-500 hover:text-white hover:bg-blue-600 transition-all duration-300"
+                  className="p-2.5 rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300"
+                  style={{ background: "var(--surface-alt)", color: "var(--muted)" }}
                 >
                   <Icon size={17} />
                 </a>
@@ -33,7 +34,7 @@ export default function Footer() {
 
           {/* Shop */}
           <div>
-            <h3 className="text-white font-semibold tracking-[0.2em] uppercase text-xs mb-5">
+            <h3 className="font-semibold tracking-[0.2em] uppercase text-xs mb-5" style={{ color: "var(--foreground)" }}>
               Boutique
             </h3>
             <ul className="space-y-3">
@@ -46,9 +47,10 @@ export default function Footer() {
                 "Nouveautés",
               ].map((item) => (
                 <li key={item}>
-                  <Link
+                    <Link
                     href="/shop"
-                    className="text-zinc-500 hover:text-zinc-200 text-sm transition-colors"
+                    className="text-sm transition-colors hover:text-blue-500"
+                    style={{ color: "var(--muted)" }}
                   >
                     {item}
                   </Link>
@@ -59,7 +61,7 @@ export default function Footer() {
 
           {/* Info */}
           <div>
-            <h3 className="text-white font-semibold tracking-[0.2em] uppercase text-xs mb-5">
+            <h3 className="font-semibold tracking-[0.2em] uppercase text-xs mb-5" style={{ color: "var(--foreground)" }}>
               Informations
             </h3>
             <ul className="space-y-3">
@@ -72,9 +74,10 @@ export default function Footer() {
                 { label: "Contact", href: "/contact" },
               ].map((item) => (
                 <li key={item.label}>
-                  <Link
+                    <Link
                     href={item.href}
-                    className="text-zinc-500 hover:text-zinc-200 text-sm transition-colors"
+                    className="text-sm transition-colors hover:text-blue-500"
+                    style={{ color: "var(--muted)" }}
                   >
                     {item.label}
                   </Link>
@@ -85,10 +88,10 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold tracking-[0.2em] uppercase text-xs mb-5">
+            <h3 className="font-semibold tracking-[0.2em] uppercase text-xs mb-5" style={{ color: "var(--foreground)" }}>
               Contact
             </h3>
-            <ul className="space-y-3 text-sm text-zinc-500">
+            <ul className="space-y-3 text-sm" style={{ color: "var(--muted)" }}>
               <li>
                 <a href="https://wa.me/221000000000" className="hover:text-zinc-200 transition-colors">
                   WhatsApp: +221 XX XXX XX XX
@@ -102,7 +105,7 @@ export default function Footer() {
                   contact@djene-shop.com
                 </a>
               </li>
-              <li className="pt-3 border-t border-white/5 text-xs text-zinc-600 leading-relaxed">
+              <li className="pt-3 border-t text-xs leading-relaxed" style={{ borderColor: "var(--border)", color: "var(--muted)" }}>
                 Livraison en 24–48h
                 <br />
                 Dakar & banlieue
@@ -111,7 +114,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between gap-4 text-xs text-zinc-700">
+        <div className="mt-12 pt-8 border-t flex flex-col sm:flex-row justify-between gap-4 text-xs" style={{ borderColor: "var(--border)", color: "var(--muted)" }}>
           <p>© 2025 Djenebou Shop. Tous droits réservés.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-zinc-400 transition-colors">
