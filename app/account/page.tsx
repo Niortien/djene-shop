@@ -175,6 +175,7 @@ export default function AccountPage() {
     admin: "Administrateur",
   };
 
+  
   return (
     <main className="min-h-screen bg-[#080808] text-[#f8f8f8]">
       {/* ─── Header ────────────────────────────────────────────── */}

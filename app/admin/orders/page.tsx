@@ -290,11 +290,12 @@ export default function AdminOrdersPage() {
 
   useEffect(() => {
     if (!token) return;
+    const t = token;
     async function run() {
       setError(null);
       setIsLoading(true);
       try {
-        const res = await adminGetOrders(token);
+        const res = await adminGetOrders(t);
         setOrders(Array.isArray(res) ? res : []);
       } catch (e) {
         setError((e as Error).message);
